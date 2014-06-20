@@ -33,31 +33,24 @@
 	}
 </style>
 <div id="div_join">
-	<form method="post" action="join.do">
-	<h2>회원가입</h2>
+	<form method="post" action="add_cafe.do">
+	<h2>카페 만들기</h2>
+	<hr>
 	<ul>
 		<li>
-			<label class="should" for="id">아이디*</label>
-			<input type="text" id="id" name="id">
+			<label class="should" for="title">카페이름*</label>
+			<input type="text" id="title" name="title">
 		</li>
 		<li>
-			<label class="should" for="name">닉네임*</label>
-			<input type="text" id="name" name="name">
+			<label class="should" for="uri">카페주소*</label>
+			<input type="text" id="uri" name="uri">
 		</li>
 		<li>
-			<label class="should" for="pass">비밀번호*</label>
-			<input type="text" id="pass" name="pass">
-		</li>
-		<li>
-			<label for="email">이메일</label>
-			<input type="email" id="email" name="email">
-		</li>
-		<li>
-			<label for="tel">연락처</label>
-			<input type="tel" id="tel" name="tel">
+			<label class="should" for="detail">상세설명*</label>
+			<input type="text" id="detail" name="detail">
 		</li>
 	</ul>
 	<input type="button" value="취소" onclick="location.href = './'"/>
-	<input type="submit" value="가입"/>
+	<input type="submit" value="생성"/>
 	</form>
 </div>

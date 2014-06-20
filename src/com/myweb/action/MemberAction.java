@@ -25,8 +25,22 @@ public class MemberAction extends Action{
 		case "join.do":
 			join(request, response);
 			break;
+		case "modify.do":
+			modify(request, response);
+			break;
 		}
 		return forward;
+	}
+
+	private void modify(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		String pass = request.getParameter("pass");
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		String tel = request.getParameter("tel");
+		app.modifyMember(id,pass,name,email,tel);
+		forward.setForwarding(false);
+		setPath("./");
 	}
 
 	private void join(HttpServletRequest request, HttpServletResponse response) {
@@ -36,18 +50,13 @@ public class MemberAction extends Action{
 		String tel = request.getParameter("tel");
 		String email = request.getParameter("email");
 		boolean result = app.join(id, name, pass, email, tel);
-		if(result){
-			forward.setForwarding(false);
-			setPath("./");
-		}else{
-			forward.setForwarding(false);
-			setPath("index.jsp?section=join");
-		}
+		forward.setForwarding(false);
+		setPath("./");
 	}
 
 	private void logout(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		JSONObject info = (JSONObject)session.getAttribute("login_info");
+		JSONObject info = (JSONObject)session.getAttribute("member");
 		if(info != null){
 			app.logout((String)info.get("id"));
 			session.invalidate();
@@ -60,7 +69,7 @@ public class MemberAction extends Action{
 		HttpSession session = request.getSession();
 		JSONObject info = app.login(request.getParameter("id"), request.getParameter("pass"), session);
 		if(info != null){
-			session.setAttribute("login_info", info);
+			session.setAttribute("member", info);
 		}
 		setPath("./");
 		setForwarding(false);

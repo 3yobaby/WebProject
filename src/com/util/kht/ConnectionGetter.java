@@ -13,7 +13,11 @@ class ConnectionGetter {
 	public ConnectionGetter() {
 		conn = getConnection();
 	}
-	private Connection getConnection() {
+	public void setConnection(Connection conn) {
+		this.conn = conn;
+	}
+	
+	public Connection getConnection() {
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
 			conn = DriverManager.getConnection(

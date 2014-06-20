@@ -1,5 +1,9 @@
+<%@page import="org.json.simple.JSONObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    	JSONObject member = (JSONObject)session.getAttribute("member");
+    %>
 <style>
 	section > div {
 		width : 400px;
@@ -33,31 +37,33 @@
 	}
 </style>
 <div id="div_join">
-	<form method="post" action="join.do">
-	<h2>회원가입</h2>
+	<form method="post" action="modify.do">
+	<fieldset>
+	<legend>정보수정</legend>
 	<ul>
 		<li>
 			<label class="should" for="id">아이디*</label>
-			<input type="text" id="id" name="id">
+			<input type="text" id="id" name="id" value="<%= member.get("id")%>" readonly="readonly">
 		</li>
 		<li>
 			<label class="should" for="name">닉네임*</label>
-			<input type="text" id="name" name="name">
+			<input type="text" id="name" name="name" value="<%= member.get("name")%>">
 		</li>
 		<li>
 			<label class="should" for="pass">비밀번호*</label>
-			<input type="text" id="pass" name="pass">
+			<input type="text" id="pass" name="pass" placeholder="비밀번호를 입력하세요">
 		</li>
 		<li>
 			<label for="email">이메일</label>
-			<input type="email" id="email" name="email">
+			<input type="email" id="email" name="email" value="<%= member.get("email") %>">
 		</li>
 		<li>
 			<label for="tel">연락처</label>
-			<input type="tel" id="tel" name="tel">
+			<input type="tel" id="tel" name="tel" value="<%= member.get("tel") %>">
 		</li>
 	</ul>
+	</fieldset>
 	<input type="button" value="취소" onclick="location.href = './'"/>
-	<input type="submit" value="가입"/>
+	<input type="submit" value="수정"/>
 	</form>
 </div>

@@ -1,5 +1,6 @@
 package com.util.kht;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +16,14 @@ public abstract class DatabaseConnector {
 	protected ResultSet rs;
 	public DatabaseConnector() {
 		cg = new ConnectionGetter();
+	}
+	
+	public void setConnection(Connection conn){
+		cg.setConnection(conn);
+	}
+	
+	public Connection getConnection(){
+		return cg.getConnection();
 	}
 	
 	public void close() {

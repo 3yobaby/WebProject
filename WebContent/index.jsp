@@ -9,7 +9,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="jquery-1.11.1.min.js"></script>
 <title>Insert title here</title>
+<script> 
+<%-- page 없음--%>
+<%
+	String temp = request.getParameter("error");
+	if(temp != null && temp.equals("cafe")){
+		%> alert('해당 카페가 없습니다');<%
+	}
+%>
+</script>
 <script>
 	// member_login form
 	document.createElement("id");
@@ -45,11 +55,15 @@
 		position: fixed;
 		bottom: 0px;
 	}
+}
 </style>
+<script>
+
+</script>
 </head>
 <body>
 <header>
-	<%if(session.getAttribute("login_info") != null){ %>
+	<%if(session.getAttribute("member") != null){ %>
 	<jsp:include page="index/header/member_info.jsp"></jsp:include>
 	<%}else{ %>
 	<jsp:include page="index/header/member_login.jsp"></jsp:include>
@@ -60,7 +74,11 @@
 	<jsp:include page="index/section/search.jsp"></jsp:include>
 	<%}else if(section.equals("join")){ %>
 	<jsp:include page="index/section/join.jsp"></jsp:include>
-	<%}%>
+	<%}else if(section.equals("modify")){%>
+	<jsp:include page="index/section/modify.jsp"></jsp:include>
+	<%}else if(section.equals("add_cafe")){%>
+	<jsp:include page="index/section/add_cafe.jsp"></jsp:include>
+	<%} %>
 </section>
 <footer>
 	footer

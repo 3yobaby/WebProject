@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.myweb.database.CafeDB;
+import com.myweb.database.cafe.CafeDB;
 
 public class CafeSearch{
 	static private CafeSearch instance;
@@ -30,7 +30,7 @@ public class CafeSearch{
 //					}
 //				}
 //			}
-//		}).run();
+//		}).start();
 	}
 	public void setInitCafe(){
 		cafes = new ArrayList<JSONObject>();
