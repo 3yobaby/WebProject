@@ -16,6 +16,7 @@
 		type = cmdb.getType((Integer)cafe.get("pk"), (Integer)member.get("pk"));
 	}
 	cmdb.close();
+	String message = request.getParameter("message");
 %>
 <!DOCTYPE html>
 <html>
@@ -26,6 +27,9 @@
 <script>
 	document.createElement("uri");
 	document.createElement("category");
+	<% if(message != null){%>
+		alert('<%= message %>');
+	<% }%>
 </script>
 <style>
 header {
@@ -85,7 +89,7 @@ body > nav{
 }
 
 body > nav > span{
-	display : block;
+	display : inline;
 	float : left;
 	size : 2em;
 	font-weight: bold;
@@ -96,16 +100,17 @@ body > nav:HOVER ul{
 	opacity : 1;
 } 
 
-body > nav > ul{
+body > nav ul{
 	float : left;
-	position : relative;
 	opacity : 0;
 	list-style: none;
 	padding : 0px;
 	margin : 0px;
 }
 
-body > nav > li {
+body > nav li {
+	float : left;
+	display : inline;
 	margin : 0px;
 }
 
@@ -147,8 +152,8 @@ hr{
 <aside>
 	<%if(type > 2){ %>
 	<jsp:include page="aside/manage_form.jsp"></jsp:include>
-	<%}else if(type == 0){ %>
-	<jsp:include page="aside/join_form.jsp"></jsp:include>
+	<%}else if(type <= 1 && member != null){ %>
+		<jsp:include page="aside/join_form.jsp"></jsp:include>
 	<%} %>
 	<jsp:include page="aside/member_info.jsp"></jsp:include>
 	<jsp:include page="aside/categories.jsp"></jsp:include>

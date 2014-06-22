@@ -17,6 +17,7 @@ public class MemberDB extends DatabaseConnector{
 //	  joined date,
 //	  is_valid varchar2(5)
 
+	
 	public int update(String id, String pass, String name, String email, String tel) {
 		setSql("update member set pass=?, name=?, email=?, tel=? where id=?");
 		setString(1, pass);
@@ -25,6 +26,16 @@ public class MemberDB extends DatabaseConnector{
 		setString(4, tel);
 		setString(5, id);
 		return updateData();
+	}
+
+	/*
+	 * get
+	 */
+	
+	public JSONObject getMember(int memberKey) {
+		setSql("select * from member where pk=?");
+		setInt(1, memberKey);
+		return getJSONObject();
 	}
 	
 	public JSONArray getAllMemberArray() {

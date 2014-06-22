@@ -1,4 +1,4 @@
-﻿drop table cafe;
+drop table cafe;
 create table cafe(
   pk number primary key,
   title varchar2(40) not null,
@@ -6,13 +6,17 @@ create table cafe(
   manager_id varchar2(20),
   detail varchar2(400),
   created date,
+  search_words varchar2(200),
+  join_rule varchar2(20),
   is_valid varchar2(5),
+  is_search varchar2(5),
   is_organization varchar2(5)
 );
 drop sequence seq_cafe;
 create sequence seq_cafe;
-insert into cafe values(seq_cafe.nextval, '동성학원', 'dongsung', '동성학원장', '동성학원 기관입니다', sysdate, 'true', 'true');
-insert into cafe values(seq_cafe.nextval, '자바스터디', 'javastudy', '김희택', '자바스터디 모임', sysdate, 'true', 'false');
+insert into cafe values(seq_cafe.nextval, '동성학원', 'dongsung', '동성학원장', '동성학원 기관입니다', sysdate, '동성|자바' ,'organization','true','true', 'true');
+insert into cafe values(seq_cafe.nextval, '자바스터디', 'javastudy', '김희택', '자바스터디 모임', sysdate, '자바' ,'cafe','true','true', 'false');
+select * from cafe where search_words like '%동%';
 select * from cafe;
 commit;
 -- cafe_category
@@ -85,17 +89,18 @@ create sequence seq_cafe_members;
 insert into cafe_members values(seq_cafe_members.nextval, 1, 1, 4); -- 동성학원, 동성학원장
 insert into cafe_members values(seq_cafe_members.nextval, 2, 2, 3);
 select * from cafe_members;
-select * from cafe_members where fk_cafe = 1 and fk_member =1;
 commit;
 --
 drop table organization_cafe;
 create table organization_cafe(
 pk number primary key,
 fk_organization number,
-fk_cafe number
+fk_cafe number,
+cafe_type number
 );
 drop sequence seq_organization_cafe;
 create sequence seq_organization_cafe;
-insert into organization_cafe values(seq_organization_cafe.nextval, 1, 2);
+insert into organization_cafe values(seq_organization_cafe.nextval, 1, 2, 1);
 select * from organization_cafe;
 commit;
+--

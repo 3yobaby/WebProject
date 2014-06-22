@@ -2,6 +2,7 @@ package com.myweb.database.cafe;
 
 import java.sql.ResultSet;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.util.kht.DatabaseConnector;
@@ -11,6 +12,43 @@ public class CafeMembersDB extends DatabaseConnector{
 //	  fk_cafe number,
 //	  fk_member number,
 //	  member_type number
+
+	public int update(int cafeKey, int memberKey, int type) {
+		setSql("update cafe_members set member_type=? where fk_cafe=? and fk_member =?");
+		setInt(1, type);
+		setInt(2, cafeKey);
+		setInt(3, memberKey);
+		return updateData();
+	}
+	
+	public int delete(int cafeKey, int memberKey) {
+		setSql("delete from cafe_members where fk_cafe=? and fk_member=?");
+		setInt(1, cafeKey);
+		setInt(2, memberKey);
+		return deleteData();
+	}
+	
+	public JSONArray getCafeArrayByCafe(int cafeKey){
+		setSql("select * from cafe_members where fk_cafe=?");
+		setInt(1, cafeKey);
+		return getJSONArray();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public JSONArray getCafeArray(int memberKey){
+		setSql("select * from cafe_members where fk_member = ?");
+		setInt(1, memberKey);
+		JSONArray array = getJSONArray();
+		JSONArray result = new JSONArray();
+		CafeDB db = new CafeDB();
+		for(int i=0; i<array.size(); i++){
+			JSONObject temp = (JSONObject)array.get(i);
+			JSONObject cafe = db.getCafe((int)temp.get("fk_cafe"));
+			result.add(cafe);
+		}
+		db.close();
+		return result;
+	}
 	
 	public int getType(int cafeKey, int memberKey){
 		setSql("select * from cafe_members where fk_cafe=? and fk_member=?");
@@ -18,7 +56,7 @@ public class CafeMembersDB extends DatabaseConnector{
 		setInt(2, memberKey);
 		JSONObject json = getJSONObject();
 		if(json == null)
-			return 0;
+			return -1;
 		return (Integer)json.get("member_type");
 	}
 	
@@ -45,4 +83,5 @@ public class CafeMembersDB extends DatabaseConnector{
 		}
 		return null;
 	}
+
 }

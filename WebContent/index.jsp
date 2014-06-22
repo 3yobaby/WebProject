@@ -4,6 +4,8 @@
 	String section = request.getParameter("section");
 	if(section == null)
 		section = "search";
+	String message = request.getParameter("message");
+	Object state = session.getAttribute("state");
 %>
 <!DOCTYPE html>
 <html>
@@ -18,6 +20,14 @@
 	if(temp != null && temp.equals("cafe")){
 		%> alert('해당 카페가 없습니다');<%
 	}
+	if(message !=null){
+		%> alert('<%= message%>')<%
+	}
+	if(state != null && state.toString().equals("false")){
+		%> alert('외부에서 로그인했습니다');
+		location.href='logout.do';
+		<%
+	}
 %>
 </script>
 <script>
@@ -28,6 +38,10 @@
 	document.createElement("uri");
 	document.createElement("date");
 	document.createElement("detail");
+	<% if(state != null && state.equals("false")){%>
+	alert("외부에서 로그인했습니다.");
+	location.href='logout.do';
+	<% }%>
 </script>
 <style>
 	header{
@@ -57,9 +71,6 @@
 	}
 }
 </style>
-<script>
-
-</script>
 </head>
 <body>
 <header>

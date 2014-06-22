@@ -1,8 +1,14 @@
+<%@page import="com.myweb.database.cafe.CafeMembersDB"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% 
 	JSONObject member = (JSONObject)session.getAttribute("member");
+	JSONObject cafe = (JSONObject)session.getAttribute("cafe");
+	CafeMembersDB cmdb = new CafeMembersDB();
+	int type = -1;
+	if(member != null)
+	type = cmdb.getType((Integer)cafe.get("pk"), (Integer)member.get("pk"));
 %>
 <style>
 	#member_info button{
@@ -20,6 +26,7 @@
 </script>
 <div id="member_info">
 <h2>회원정보</h2>
+
 <%if(member != null){ %>
 <%= member.get("id")%>
 <%= member.get("name")%>

@@ -11,7 +11,6 @@ import com.util.kht.Action;
 import com.util.kht.Forward;
 
 public class MemberAction extends Action{
-	private CafeApplication app = CafeApplication.getInstance();
 	@Override
 	public Forward execute(String command, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -38,9 +37,13 @@ public class MemberAction extends Action{
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String tel = request.getParameter("tel");
-		app.modifyMember(id,pass,name,email,tel);
+		String newPass = request.getParameter("new_pass");
+		CafeApplication app = (CafeApplication) request.getServletContext().getAttribute("cafeApplication");
+		boolean b = app.modifyMember(id,pass,newPass,name,email,tel);
 		forward.setForwarding(false);
-		setPath("./");
+		if(b)
+			setPath("?message=success");
+		else setPath("?message=fail");
 	}
 
 	private void join(HttpServletRequest request, HttpServletResponse response) {
@@ -49,14 +52,18 @@ public class MemberAction extends Action{
 		String pass = request.getParameter("pass");
 		String tel = request.getParameter("tel");
 		String email = request.getParameter("email");
+		CafeApplication app = (CafeApplication) request.getServletContext().getAttribute("cafeApplication");
 		boolean result = app.join(id, name, pass, email, tel);
 		forward.setForwarding(false);
-		setPath("./");
+		if(result)
+			setPath("?message=success");
+		else setPath("?message=fail");
 	}
 
 	private void logout(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		JSONObject info = (JSONObject)session.getAttribute("member");
+		CafeApplication app = (CafeApplication) request.getServletContext().getAttribute("cafeApplication");
 		if(info != null){
 			app.logout((String)info.get("id"));
 			session.invalidate();
@@ -67,11 +74,14 @@ public class MemberAction extends Action{
 
 	private void login(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
+		CafeApplication app = (CafeApplication) request.getServletContext().getAttribute("cafeApplication");
 		JSONObject info = app.login(request.getParameter("id"), request.getParameter("pass"), session);
 		if(info != null){
 			session.setAttribute("member", info);
+			setPath("?message=success");
+		}else {
+			setPath("?message=fail");
 		}
-		setPath("./");
 		setForwarding(false);
 	}
 	

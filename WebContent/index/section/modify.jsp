@@ -50,8 +50,12 @@
 			<input type="text" id="name" name="name" value="<%= member.get("name")%>">
 		</li>
 		<li>
-			<label class="should" for="pass">비밀번호*</label>
+			<label class="should" for="pass">비밀번호 확인*</label>
 			<input type="text" id="pass" name="pass" placeholder="비밀번호를 입력하세요">
+		</li>
+		<li>
+			<label class="should" for="new_pass">비밀번호*</label>
+			<input type="text" id="new_pass" name="new_pass" placeholder="새로운 비밀번호">
 		</li>
 		<li>
 			<label for="email">이메일</label>

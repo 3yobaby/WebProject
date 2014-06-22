@@ -19,8 +19,8 @@ public class BoardDB extends DatabaseConnector{
 
 	public int insert(int pk_category, int pk_member, String name,
 			String title, String content) {
-		setSql("insert into board values(seq_cafe_board.nextval, "
-				+ " ?, ?, ?, ?, ?, sysdate, seq_cafe_board.nextval )");
+		setSql("insert into board values(seq_board.nextval, "
+				+ " ?, ?, ?, ?, ?, sysdate, seq_board.nextval )");
 		setInt(1, pk_category);
 		setInt(2, pk_member);
 		setString(3, name);
